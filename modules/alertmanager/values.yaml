@@ -1,18 +1,15 @@
-alertmanager:
-  config:
-    global:
-      resolve_timeout: 5m
-    route:
-      group_by: ['alertname']
-      group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 12h
-      receiver: 'email'
-    receivers:
-      - name: 'email'
-        email_configs:
-          - to: 'your-email@example.com'
-            from: 'alertmanager@example.com'
-            smarthost: 'smtp.example.com:587'
-            auth_username: 'alertmanager@example.com'
-            auth_password: 'password'
+# Alertmanager Helm chart values configuration
+config:
+  global:
+    resolve_timeout: 5m
+  route:
+    receiver: 'slack-notifications'
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 12h
+  receivers:
+    - name: 'slack-notifications'
+      slack_configs:
+        - send_resolved: true
+          channel: '#alerts'
+          api_url: 'https://hooks.slack.com/services/your/slack/webhook'

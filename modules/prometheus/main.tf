@@ -8,12 +8,8 @@ resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus"
-  version    = "14.5.0"
-  namespace  = "monitoring"
-
-  values = [
-    file("values.yaml")
-  ]
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  values     = [file("${path.module}/values.yaml")]
 }
 
 resource "kubernetes_namespace" "monitoring" {

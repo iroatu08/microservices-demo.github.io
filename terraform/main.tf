@@ -98,7 +98,7 @@ resource "kubernetes_deployment" "sock_shop" {
         container {
           name  = "sock-shop"
           image = "weaveworksdemos/sock-shop"
-          ports {
+          port {
             container_port = 80
           }
         }

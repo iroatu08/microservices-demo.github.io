@@ -7,11 +7,7 @@ provider "helm" {
 resource "helm_release" "alertmanager" {
   name       = "alertmanager"
   repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
-  version    = "12.11.3"
-  namespace  = "monitoring"
-
-  values = [
-    file("values.yaml")
-  ]
+  chart      = "alertmanager"
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  values     = [file("${path.module}/values.yaml")]
 }

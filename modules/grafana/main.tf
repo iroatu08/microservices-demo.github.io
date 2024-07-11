@@ -8,10 +8,6 @@ resource "helm_release" "grafana" {
   name       = "grafana"
   repository = "https://grafana.github.io/helm-charts"
   chart      = "grafana"
-  version    = "6.6.2"
-  namespace  = "monitoring"
-
-  values = [
-    file("values.yaml")
-  ]
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
+  values     = [file("${path.module}/values.yaml")]
 }
