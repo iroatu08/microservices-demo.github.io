@@ -1,0 +1,60 @@
+name: Deploy Sock Shop Application
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Initialize Terraform
+        working-directory: ./terraform
+        run: terraform init
+
+      - name: Apply Terraform
+        working-directory: ./terraform
+        run: terraform apply -auto-approve
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Set up Helm
+        run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      - name: Add Helm repositories
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo update
+
+      - name: Deploy Prometheus
+        working-directory: ./modules/prometheus
+        run: helm upgrade --install prometheus prometheus-community/prometheus -f values.yaml
+
+      - name: Deploy Grafana
+        working-directory: ./modules/grafana
+        run: helm upgrade --install grafana grafana/grafana -f values.yaml
+
+      - name: Deploy Alertmanager
+        working-directory: ./modules/alertmanager
+        run: helm upgrade --install alertmanager prometheus-community/alertmanager -f values.yaml
