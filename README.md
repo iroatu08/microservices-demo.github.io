@@ -133,6 +133,9 @@ aws eks update-kubeconfig --name=socks-shop-cluster --region=us-east-2
 
 ```
 cd ../kubernetes
+```
+
+```
 kubectl apply -f sock-shop-deployment.yaml
 
 ```
@@ -147,7 +150,7 @@ kubectl get all -n sock-shop
 
 <img src="images/get-all-n.png"/>
 
-# You can also use the following command to verify that the Socks Shop application is running on the Kubernetes cluster:
+## You can also use the following command to verify that the Socks Shop application is running on the Kubernetes cluster:
 
 ```
 kubectl get all -A
@@ -245,7 +248,7 @@ runs-on: ubuntu-latest
    kubectl apply $(ls _-prometheus-_.yaml | awk ' { print " -f " $1 } ')
 ```
 
-# Expose Prometheus server
+## Expose Prometheus server
 
 ```
 kubectl port-forward service/prometheus 31090:9090 -n monitoring
@@ -259,13 +262,13 @@ kubectl port-forward service/prometheus 31090:9090 -n monitoring
 kubectl apply $(ls _-grafana-_.yaml | awk ' { print " -f " $1 }' | grep -v grafana-import)
 ```
 
-# Once Grafana pod is running, import dashboards
+## Once Grafana pod is running, import dashboards
 
 ```
 kubectl apply -f 23-grafana-import-dash-batch.yaml
 ```
 
-# Expose Grafana server
+## Expose Grafana server
 
 ```
 kubectl port-forward service/grafana 31300:3000 -n monitoring
@@ -280,13 +283,13 @@ kubectl port-forward service/grafana 31300:3000 -n monitoring
    kubectl apply -f .
 ```
 
-# Verify the logging services
+## Verify the logging services
 
 ```
 kubectl get all -n kube-system
 ```
 
-# Port forward Kibana service
+## Port forward Kibana service
 
 ```
 kubectl port-forward service/kibana 5601:5601 -n kube-system
