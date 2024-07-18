@@ -78,27 +78,43 @@ microservices-demo.github.io/
 
 2. Setup Terraform Configuration:
 
-# Create a directory for the Terraform configuration files
+## Create a directory for the Terraform configuration files
 
+```
 mkdir socks-shop-deploy
+```
+
+```
 cd socks-shop-deploy
+```
 
-# Clone the repository
+## Clone the repository
 
+```
 git clone https://github.com/microservices-demo/microservices-demo.github.io.git
+```
+
+```
 cd microservices-demo.github.io/deploy/terraform
+```
 
-# Initialize the Terraform project
+## Initialize the Terraform project
 
+```
 terraform init
+```
 
-# Create an execution plan
+## Create an execution plan
 
+```
 terraform plan
+```
 
-# Apply the changes
+## Apply the changes
 
+```
 terraform apply --auto-approve
+```
 
 Below is a screenshot of my EKS cluster being provisioned by terraform👇🏽:
 
@@ -106,34 +122,44 @@ Below is a screenshot of my EKS cluster being provisioned by terraform👇🏽:
 
 2. Configure AWS CLI and kubectl:
 
-# Run the command below and Follow the instructions to store credentials of your IAM user on your local environment
+## Run the command below and Follow the instructions to store credentials of your IAM user on your local environment
 
-aws configure  
+```
+aws configure
 aws eks update-kubeconfig --name=socks-shop-cluster --region=us-east-2
+```
 
-# Apply the deployment manifests to the cluster
+## Apply the deployment manifests to the cluster
 
+```
 cd ../kubernetes
 kubectl apply -f sock-shop-deployment.yaml
-<img src="assets/deployment.png">
+<img src="assets/deployment.png"/>
+```
 
-# You can now use the kubeconfig file to access the Kubernetes cluster and deploy the Socks Shop application.
+## You can now use the kubeconfig file to access the Kubernetes cluster and deploy the Socks Shop application.
 
+```
 kubectl get all -n sock-shop
+```
 
-<img src="assets/get-all-n.png">
+<img src="assets/get-all-n.png"/>
 
 # You can also use the following command to verify that the Socks Shop application is running on the Kubernetes cluster:
 
+```
 kubectl get all -A
+```
 
-<img src="assets/get-all.png">
+<img src="assets/get-all.png"/>
 
-# After we confirm that our pods are running, we can now test the application by port-forwarding the service to our local machine using the following command:
+## After we confirm that our pods are running, we can now test the application by port-forwarding the service to our local machine using the following command:
 
+```
 kubectl port-forward service/front-end -n sock-shop 30001:80
+```
 
-<img src="assets/sockshop-frontend.png">
+<img src="assets/sockshop-frontend.png"/>
 
 ## **Deployment Pipeline:**
 
@@ -205,42 +231,64 @@ runs-on: ubuntu-latest
 ## Prometheus:
 
 1. Create Monitoring Namespace:
+
+```
    cd ../manifests-monitoring/prometheus
    kubectl create -f 00-monitoring-ns.yaml
+```
 
 2. Deploy Prometheus:
+
+```
    kubectl apply $(ls _-prometheus-_.yaml | awk ' { print " -f " $1 } ')
+```
 
 # Expose Prometheus server
 
+```
 kubectl port-forward service/prometheus 31090:9090 -n monitoring
+```
 
 ## Grafana:
 
 1. Deploy Grafana:
-   kubectl apply $(ls _-grafana-_.yaml | awk ' { print " -f " $1 }' | grep -v grafana-import)
+
+```
+kubectl apply $(ls _-grafana-_.yaml | awk ' { print " -f " $1 }' | grep -v grafana-import)
+```
 
 # Once Grafana pod is running, import dashboards
 
+```
 kubectl apply -f 23-grafana-import-dash-batch.yaml
+```
 
 # Expose Grafana server
 
+```
 kubectl port-forward service/grafana 31300:3000 -n monitoring
+```
 
 ## Logging:
 
 1. Deploy ELK Stack:
+
+```
    cd ../logging
    kubectl apply -f .
+```
 
 # Verify the logging services
 
+```
 kubectl get all -n kube-system
+```
 
 # Port forward Kibana service
 
+```
 kubectl port-forward service/kibana 5601:5601 -n kube-system
+```
 
 ## **Security:**
 
