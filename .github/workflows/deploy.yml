@@ -35,15 +35,18 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
+        working-directory: ./deploy/terraform
         run: terraform init
 
       - name: Terraform Plan
         id: plan
+        working-directory: ./deploy/terraform
         run: terraform plan
 
       # tf apply and deploy to EKS
       - name: Terraform apply
         id: apply
+        working-directory: ./deploy/terraform
         run: terraform apply --auto-approve
 
       - name: AWS EKS with Kubectl
@@ -54,4 +57,4 @@ jobs:
           aws-region: 'us-east-2'
           cluster-name: 'socks-shop-cluster'
           command: |
-            kubectl apply -f deployment.yaml
+            kubectl apply -f sock-shop-deployment.yaml
