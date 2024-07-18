@@ -1,59 +1,57 @@
 # **Socks Shop Microservices-based Application Deployment on Kubernetes using IaC.**
 
-<img src="assets/Architecture.png">
-
-##
-
 ## **Project Overview:**
 
-The Socks Shop application is a popular microservices-based e-commerce platform that is used as a reference application for demonstrating modern cloud-native technologies. The application is composed of multiple microservices, each of which is responsible for a specific function, such as product catalog, shopping cart, and user authentication. The application is designed to be highly scalable, resilient, and fault-tolerant, making it an ideal candidate for deployment on Kubernetes.
+Objective: Deploy the Socks Shop application, a microservices-based architecture, on Kubernetes using Infrastructure as Code (IaC). The goal is to automate and streamline the deployment process, ensuring clarity, maintainability, and security.
 
-The project will involve deploying the Socks Shop application on a Kubernetes cluster using an Infrastructure as Code (IaC) approach. This will include provisioning the necessary infrastructure resources on AWS, setting up a deployment pipeline, monitoring the performance and health of the application, and securing the infrastructure.
+## **Setup Details:**
 
-The project will be implemented using Terraform for infrastructure provisioning, GitHub Actions for the deployment pipeline, Kubernetes for container orchestration, Helm for package management, Prometheus for monitoring, ELK Stack for logging, and Ansible for security.
+Provision the Socks Shop example microservice application from the following repositories:
 
-## **This project will include the following components:**
+- [Socks Shop Microservices Demo GitHub Repository](https://github.com/microservices-demo/microservices-demo.github.io)
+- [Detailed Implementation Guide GitHub Repository](https://github.com/microservices-demo/microservices-demo/tree/master)
 
-- [Infrastructure Provisioning](#infrastructure-provisioning)
-- [Deployment Pipeline](#deployment-pipeline)
-- [Monitoring](#monitoring)
-- [Logging](#logging)
-- [Security](#security)
-- [conclusion](#conclusion)
-- [References](#references)
+## **Task Instructions:**
 
-## **Project Requirements:**
+All deliverables must be deployed using an Infrastructure as Code approach.
+Emphasize readability and maintainability in your application deployment.
+Provide a clear way to recreate your setup, with evaluations based on:
 
-- Terraform
-- AWS Account
-- Kubernetes
-- Helm
-- Prometheus
-- ELK Stack
-- Let's Encrypt
-- Socks Shop Application
+- Deploy pipeline
+- Metrics (Alertmanager)
+- Monitoring (Grafana)
+- Logging (Prometheus)
+- Use Prometheus for monitoring.
+- Use Ansible or Terraform for configuration management.
+- Deploy on a Kubernetes cluster using an IaaS provider of your choice.
+- Ensure the application runs on HTTPS with a Let’s Encrypt certificate.
+
+## **Bonus Points:**
+
+- Secure the infrastructure with network perimeter security access rules.
+- Use Ansible Vault to encrypt sensitive information.
 
 ## **Project Deliverables:**
 
-- Terraform configuration files for provisioning the infrastructure on AWS
-- Deployment pipeline configuration using GitHub Actions
-- Kubernetes manifests for deploying the Socks Shop application
-- Prometheus configuration for monitoring the Socks Shop application
-- ELK Stack configuration for centralized logging
-- Ansible playbooks for securing the infrastructure
-- Documentation on how to run the project
+- Terraform Configuration: For provisioning the infrastructure on AWS, including VPCs, subnets, security groups, and EKS cluster.
+- Deployment Pipeline Configuration: Using GitHub Actions.
+- Kubernetes Manifests: For deploying the Socks Shop application.
+- Prometheus Configuration: For monitoring the application.
+- ELK Stack Configuration: For centralized logging.
+- Ansible Playbooks: For securing the infrastructure.
+- Documentation: Detailed instructions on how to run the project.
 
 ## **Project Structure:**
 
 ```
-socks-shop-deploy/
+microservices-demo.github.io/
 ├── .github/
 │   └── workflows/
-│       └── ci-cd.yaml    # GitHub Actions workflow for CI/CD
-├── k8s/
-│   ├── deployment.yaml   # Kubernetes deployment manifests
-│   └── ingress.yaml      # Kubernetes ingress manifest
-├── monitoring/
+│       └── deploy.yaml    # GitHub Actions workflow for CI/CD automation.
+├── kubernetes/
+│   ├── sock-shop-deployment.yaml   # Kubernetes deployment manifests
+│   └── sock-shop-ingress.yaml      # Kubernetes ingress manifest
+├── manifests-monitoring/
 │   ├── prometheus/
 │   │   └── values.yaml   # Custom values for Prometheus Helm chart
 │   └── grafana/
@@ -61,213 +59,198 @@ socks-shop-deploy/
 ├── logging/
 │       ├── elasticsearch.yaml  # Elasticsearch deployment
 │       ├── filebeat.yaml       # Fluentd configuration
-│       └── kibana-deployment.yaml         # Kibana dashboard configuration
+│       └── kibana-deployment.yaml   # Kibana dashboard configuration
 |       └── cronjob.yaml        # Fluentd configuration
 |       └── metricbeat.yaml     #  Fluentd configuration
-|       └── logstash-deployment.yaml        # Fluentd configuration
+|       └── logstash-deployment.yaml   # Fluentd configuration
 ├── terraform/
 │   ├── main.tf         # Main Terraform configuration for AWS EKS
 │   ├── terraform.tf    # Terraform configuration
 │   ├── outputs.tf      # Terraform outputs
-│   ├── provider.tf     # Provider configuration
-│   └── vpc.tf          # VPC configuration
+│   └── variables.tf          # Variables configuration
 └──README.md
 ```
 
-The project will be organized into the following directories:
+1. Install Prerequisites:
 
-- `Infrastructure`: This directory will contain the Terraform configuration files for provisioning the necessary infrastructure resources on AWS, including VPCs, subnets, security groups, and EKS cluster.
-- `kubernetes`: This directory will contain the Kubernetes manifests for deploying the Socks Shop application, including deployment and ingress resources.
-- `CI/CD`: This directory will contain the GitHub Actions workflow files for setting up a deployment pipeline to build and deploy the Socks Shop application to the Kubernetes cluster.
-- `Monitoring`: This directory will contain the configuration files for setting up Prometheus to monitor the performance and health of the Socks Shop application.
-- `Logging`: This directory will contain the configuration files for setting up a centralized logging solution, such as ELK stack, to collect and analyze logs from the Socks Shop application.
+   - [AWS CLI](https://aws.amazon.com/cli/)
+   - [Terraform](https://www.terraform.io/downloads.html)
 
-The project will also include a `README.md` file in each directory to provide detailed instructions on how to set up and configure the components.
+2. Setup Terraform Configuration:
 
-## **Prerequisites:**
+# Create a directory for the Terraform configuration files
 
-The following tools and technologies will be used in the project:
+mkdir socks-shop-deploy
+cd socks-shop-deploy
 
-- Terraform: Terraform is an open-source infrastructure as code software tool that provides a consistent CLI workflow to manage hundreds of cloud services. It codifies APIs into declarative configuration files, creating infrastructure as code using a high-level configuration language called HCL (HashiCorp Configuration Language).
+# Clone the repository
 
-- AWS Account: An AWS account will be required to provision the necessary infrastructure resources, such as VPCs, subnets, security groups, and EKS cluster.
+git clone https://github.com/microservices-demo/microservices-demo.github.io.git
+cd microservices-demo.github.io/deploy/terraform
 
-- GitHub Actions: GitHub Actions will be used to set up a deployment pipeline to build and deploy the Socks Shop application to the Kubernetes cluster.
+# Initialize the Terraform project
 
-- Kubernetes: Kubernetes is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications.
+terraform init
 
-- Helm: Helm is a package manager for Kubernetes that provides an easy way to find, share, and use software built for Kubernetes.
+# Create an execution plan
 
-- Prometheus: Prometheus is an open-source monitoring and alerting toolkit designed for reliability and scalability. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts if some condition is observed to be true.
+terraform plan
 
-- ELK Stack: The ELK Stack is a collection of three open-source products — Elasticsearch, Logstash, and Kibana — all developed, managed, and maintained by Elastic. The ELK Stack is used to collect, search, analyze, and visualize log data in real time.
+# Apply the changes
 
-- Let's Encrypt: Let's Encrypt is a free, automated, and open certificate authority brought to you by the nonprofit Internet Security Research Group (ISRG).
-
-- Docker: Docker is a set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.
-
-- Socks Shop Application: The Socks Shop application is a popular microservices-based e-commerce platform that is used as a reference application for demonstrating modern cloud-native technologies.
-
-## **Project Objectives:**
-
-The main objectives of the project are as follows:
-
-- Deploy the Socks Shop application on a Kubernetes cluster using an Infrastructure as Code (IaC) approach
-- Provision the necessary infrastructure resources on AWS, including VPCs, subnets, security groups, and EKS cluster
-- Set up a deployment pipeline using GitHub Actions to build and deploy the Socks Shop application to the Kubernetes cluster
-- Monitor the performance and health of the Socks Shop application using Prometheus
-- Collect and analyze logs from the Socks Shop application using a centralized logging solution, such as ELK stack.
-
-#
-
-## **GETTING STARTED**
-
-Socks Shop Resources: https://github.com/microservices-demo/microservices-demo.github.io
-
-Demo: https://github.com/microservices-demo/microservices-demo/tree/master
-
-## **Infrastructure Provisioning:**
-
-Using Terraform, we will provision the necessary infrastructure resources on AWS, including VPCs, subnets, security groups, and EKS cluster. This will allow for a clear and reproducible infrastructure setup.
-
-1.  Make sure you have installed Terraform alongside AWS CLI on your local machine. If not, you can download it from the official website.
-
-    [AWS CLI Installation guide](https://aws.amazon.com/cli/)
-
-    [Terraform Download](https://www.terraform.io/downloads.html)
-
-2.  Create a new directory for the Terraform configuration files and navigate to it.
-
-        mkdir Socks-Shop_Terraform
-        cd Socks-Shop_Terraform
-
-3.  Git clone this repository and navigate to the terraform folder to have the Terraform configuration files and initiate the Terraform project.
-
-        git clone https://github.com/ogdmerlin/Socks-Shop/Terraform
-
-4.  Run the following command to initialize the Terraform project:
-
-        terraform init
-
-5.  Run the following command to create an execution plan:
-
-        terraform plan
-
-6.  Run the following command to apply the changes:
-
-        terraform apply --auto-approve
-
-        #the flag --auto-approve can be added to avoid the prompt for confirmation.
+terraform apply --auto-approve
 
 Below is a screenshot of my EKS cluster being provisioned by terraform👇🏽:
 
-  <img src="Images/eks.png">
+  <img src="assets/eks_cluster.png">
 
-This below command allow us to configure the kubectl to connect to the EKS cluster, the specified region and the cluster name.
+2. Configure AWS CLI and kubectl:
 
-    aws eks update-kubeconfig --name=socksShop-eks-U2VM9 --region=us-east-2
+# Run the command below and Follow the instructions to store credentials of your IAM user on your local environment
 
-7.  After the infrastructure has been provisioned, you will see the output of the Terraform apply command, including the EKS cluster endpoint and the kubeconfig file.
+aws configure  
+aws eks update-kubeconfig --name=socks-shop-cluster --region=us-east-2
 
-- We apply our deployment manifests to our cluster using the following command:
+# Apply the deployment manifests to the cluster
 
-        kubectl apply -f kubernetes/deployment.yaml
+cd ../kubernetes
+kubectl apply -f sock-shop-deployment.yaml
+<img src="assets/deployment.png">
 
-    <img src="Images/apply-deployment.png">
+# You can now use the kubeconfig file to access the Kubernetes cluster and deploy the Socks Shop application.
 
-8.  You can use the kubeconfig file to access the Kubernetes cluster and deploy the Socks Shop application.
+kubectl get all -n sock-shop
 
-    <img src="Images/all-pods.png">
+<img src="assets/get-all-n.png">
 
-9.  You can also use the following command to verify that the Socks Shop application is running on the Kubernetes cluster:
+# You can also use the following command to verify that the Socks Shop application is running on the Kubernetes cluster:
 
-        kubectl get all -A
+kubectl get all -A
 
-    <img src="Images/get-pods-A.png">
+<img src="assets/get-all.png">
 
-10. After we confirm that our pods are running, we can now test the application by port-forwarding the service to our local machine using the following command:
+# After we confirm that our pods are running, we can now test the application by port-forwarding the service to our local machine using the following command:
 
-        kubectl port-forward service/front-end -n sock-shop 30001:80
+kubectl port-forward service/front-end -n sock-shop 30001:80
 
-    <img src="Images/frontend.png">
+<img src="assets/sockshop-frontend.png">
 
 ## **Deployment Pipeline:**
 
-The deployment pipeline will be configured using a GitHub Actions workflow file, which will define the steps required to build and deploy the Socks Shop application. The workflow file will be triggered by a push to the main branch of the repository, and will include the following steps:
+Create a `.github/workflows/deploy.yaml` file:
+navigate to github console and Store AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY credentials on github as a secrete variable.
 
-Our workflow file must be in our root directory for our GitHub Actions to detect the file automatically.
+name: Deploy Sock Shop Application
 
-- Checkout the source code from the repository
-- Build the Docker images for the Socks Shop application
-- Deploy the Socks Shop application to the Kubernetes cluster
+on:
+push:
+branches: - master
 
-The deployment pipeline will be configured to run automatically whenever changes are pushed to the main branch of the repository, ensuring that the Socks Shop application is always up to date and running the latest version.
+jobs:
+terraform:
+name: Terraform
+runs-on: ubuntu-latest
 
-## **Monitoring**
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-Prometheus will be used to monitor the performance and health of the Socks Shop application. This will include metrics such as request latency, error rate, and request volume. The Prometheus server will be configured to scrape metrics from the Socks Shop application and store them in a time-series database. Grafana will be used to visualize the metrics and create dashboards to monitor the performance and health of the application.
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
 
-First create the monitoring namespace using the `00-monitoring-ns.yaml` file:
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-    kubectl create -f 00-monitoring-ns.yaml
+      - name: install kubectl
+        run: |
+          sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-- **Prometheus**
+      # install terraform
+      - name: install terraform cli
+        uses: hashicorp/setup-terraform@v3
 
-To deploy simply apply all the prometheus manifests (01-10) in any order:
+      - name: Terraform Init
+        working-directory: ./deploy/terraform
+        run: terraform init
 
-    kubectl apply $(ls *-prometheus-*.yaml | awk ' { print " -f " $1 } ')
+      - name: Terraform Plan
+        id: plan
+        working-directory: ./deploy/terraform
+        run: terraform plan
 
-The prometheus server will be exposed on Nodeport `31090` using the following command:
+      # tf apply and deploy to EKS
+      - name: Terraform apply
+        id: apply
+        working-directory: ./deploy/terraform
+        run: terraform apply --auto-approve
 
-    kubectl port-forward service/prometheus 31090:9090 -n monitoring
+      - name: AWS EKS with Kubectl
+        uses: giovannirossini/aws-eks@v1.0.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-2'
+          cluster-name: 'socks-shop-cluster'
+          command: |
+            kubectl apply -f ./deploy/kubernetes/sock-shop-deployment.yaml
 
-<img src="Images/prometheus.png">
+## **Monitoring:**
 
-- **Grafana**
+## Prometheus:
 
-First apply the grafana manifests from 20 to 22:
+1. Create Monitoring Namespace:
+   cd ../manifests-monitoring/prometheus
+   kubectl create -f 00-monitoring-ns.yaml
 
-    kubectl apply $(ls *-grafana-*.yaml | awk ' { print " -f " $1 }'  | grep -v grafana-import)
+2. Deploy Prometheus:
+   kubectl apply $(ls _-prometheus-_.yaml | awk ' { print " -f " $1 } ')
 
-Once the grafana pod is in the Running state apply the `23-grafana-import-dash-batch.yaml` manifest to import the Dashboards:
+# Expose Prometheus server
 
-    kubectl apply -f 23-grafana-import-dash-batch.yaml
+kubectl port-forward service/prometheus 31090:9090 -n monitoring
 
-Grafana will be exposed on the NodePort `31300` using the following command:
+## Grafana:
 
-    kubectl port-forward service/grafana 31300:3000 -n monitoring
+1. Deploy Grafana:
+   kubectl apply $(ls _-grafana-_.yaml | awk ' { print " -f " $1 }' | grep -v grafana-import)
 
-- Below is the screenshot:👇🏽
-  <img src="Images/grafana-sockshop.png">
+# Once Grafana pod is running, import dashboards
 
-    <img src="Images/prometheus-pod-resources.png">
+kubectl apply -f 23-grafana-import-dash-batch.yaml
 
-## **Logging:**
+# Expose Grafana server
 
-We will use the ELK stack to collect and analyze logs from the Socks Shop application. The ELK stack is a collection of three open-source products — Elasticsearch, Logstash, and Kibana — all developed, managed, and maintained by Elastic. The ELK Stack is used to collect, search, analyze, and visualize log data in real time.
+kubectl port-forward service/grafana 31300:3000 -n monitoring
 
-- Below is the screenshot showing the deployment of logging to our cluster:👇🏽
+## Logging:
 
-<img src="Images/logging-apply-all.png">
+1. Deploy ELK Stack:
+   cd ../logging
+   kubectl apply -f .
 
-- We verify that our pods are running the freshly deployed logging services.
-  <img src="Images/all-kubesystem.png">
+# Verify the logging services
 
-- After the successful deployment of the loggings into our cluster, we use the following command to portfoward the service to we can access it locally;
+kubectl get all -n kube-system
 
-        kubectl port-forward service/kibana 5601:5601 -n kube-system
+# Port forward Kibana service
 
-<img src="Images/kibanna_logging.png">
+kubectl port-forward service/kibana 5601:5601 -n kube-system
 
 ## **Security:**
 
-The application will be secured with HTTPS using a Let's Encrypt certificate. Let's Encrypt is a free, automated, and open certificate authority that provides free SSL/TLS certificates for websites. The certificate will be used to secure the communication between the client and the Socks-Shop application, ensuring that the data is encrypted and secure.
+- Implement HTTPS using Let's Encrypt certificates.
+- Configure network perimeter security access rules.
+- Use Ansible Vault to encrypt sensitive information.
 
 ## **Conclusion:**
 
-This project will provide hands-on experience with Infrastructure as Code, Kubernetes, DevOps best practices, and cloud security. It will also demonstrate the value of automation and monitoring in ensuring the reliability and performance of microservices-based applications. By the end of the project, you will have a fully functional deployment pipeline for the Socks Shop application, including infrastructure provisioning, monitoring, logging, and security.
-
-#
+This project provides hands-on experience with Infrastructure as Code, Kubernetes, DevOps best practices, and cloud security. By the end of the project, you will have a fully functional deployment pipeline for the Socks Shop application, including infrastructure provisioning, monitoring, logging, and security.
 
 ## **References:**
 

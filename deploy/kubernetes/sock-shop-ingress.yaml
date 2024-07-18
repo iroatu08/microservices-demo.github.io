@@ -1,16 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sock-ingress
-  namespace: sock-shop
+  name: socks-shop-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
 spec:
-  ingressClassName: nginx
+  tls:
+    - hosts:
+        - test.bashplugent.com
+      secretName: socks-shop-tls
   rules:
-    - host: capstone.ogdmerlin.xyz
+    - host: test.bashplugent.com
       http:
         paths:
-          - pathType: Prefix
-            path: /
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: front-end
