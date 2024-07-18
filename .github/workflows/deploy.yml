@@ -57,4 +57,4 @@ jobs:
           aws-region: 'us-east-2'
           cluster-name: 'socks-shop-cluster'
           command: |
-            kubectl apply -f sock-shop-deployment.yaml
+            kubectl apply -f ./deploy/kubernetes/sock-shop-deployment.yaml
