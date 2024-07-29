@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: socks-tls
+  namespace: sock-shop
+spec:
+  secretName: socks-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  commonName: juliangel2006.xyz
+  dnsNames:
+    - juliangel2006.xyz

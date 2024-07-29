@@ -166,6 +166,59 @@ kubectl port-forward service/front-end -n sock-shop 30001:80
 
 <img src="images/sockshop-frontend.png"/>
 
+2. To Deploy Globally with security (Https):
+
+## **install Nginx Ingress controller to so you can be able to get External Ip**
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+
+```
+
+## **you might modify your front-end service to use type: LoadBalancer**
+
+```
+kubectl apply -f global-service.yaml
+```
+
+## **Install cert-manager CRDs**
+
+```
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.1/cert-manager.crds.yaml
+```
+
+## **Install cert-manager**
+
+```
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.1/cert-manager.yaml
+```
+
+## **Or using Helm**
+
+```
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.1 --set installCRDs=true
+```
+
+## **Verify installation**
+
+```
+kubectl get pods --namespace cert-manager
+```
+
+## **Apply the ClusterIssuer**
+
+```
+kubectl apply -f cluster-issuer.yaml
+```
+
+## **Get front-end service external ip**
+
+```
+kubectl get service front-end -n sock-shop
+```
+
 ## **Deployment Pipeline:**
 
 Create a `.github/workflows/deploy.yaml` file:
