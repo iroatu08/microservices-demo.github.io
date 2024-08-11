@@ -122,7 +122,7 @@ Below is a screenshot of my EKS cluster being provisioned by terraform👇🏽:
 
 2. Configure AWS CLI and kubectl:
 
-## Run the command below and Follow the instructions to store credentials of your IAM user on your local environment
+## Run the command below and Follow the instructions to store credentials of your IAM user on your local environment and Update your Kubectl Config
 
 ```
 aws configure
@@ -132,7 +132,7 @@ aws eks update-kubeconfig --name=socks-shop-cluster --region=us-east-2
 ## Apply the deployment manifests to the cluster
 
 ```
-cd ../kubernetes
+cd microservices-demo.github.io/deploy/kubernetes
 ```
 
 ```
@@ -140,7 +140,7 @@ kubectl apply -f sock-shop-deployment.yaml
 
 ```
 
-<img src="images/deployment.png"/>
+<img src="./images/deployment.png"/>
 
 ## You can now use the kubeconfig file to access the Kubernetes cluster and deploy the Socks Shop application.
 
@@ -148,7 +148,7 @@ kubectl apply -f sock-shop-deployment.yaml
 kubectl get all -n sock-shop
 ```
 
-<img src="images/get-all-n.png"/>
+<img src="./images/get-all-n.png"/>
 
 ## You can also use the following command to verify that the Socks Shop application is running on the Kubernetes cluster:
 
@@ -156,7 +156,7 @@ kubectl get all -n sock-shop
 kubectl get all -A
 ```
 
-<img src="images/get-all.png"/>
+<img src="./images/get-all.png"/>
 
 ## After we confirm that our pods are running, we can now test the application by port-forwarding the service to our local machine using the following command:
 
@@ -164,7 +164,7 @@ kubectl get all -A
 kubectl port-forward service/front-end -n sock-shop 30001:80
 ```
 
-<img src="images/sockshop-frontend.png"/>
+<img src="./images/sockshop-frontend.png"/>
 
 2. To Deploy Globally with security (Https):
 
@@ -210,7 +210,7 @@ kubectl get pods --namespace cert-manager
 ## **Apply the ClusterIssuer**
 
 ```
-kubectl apply -f cluster-issuer.yaml
+kubectl apply -f clusterissuer.yaml
 ```
 
 ## **Get front-end service external ip**
