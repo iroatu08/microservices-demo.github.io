@@ -118,7 +118,8 @@ terraform apply --auto-approve
 
 Below is a screenshot of my EKS cluster being provisioned by terraform👇🏽:
 
-![eks_cluster]("images/eks_cluster.png")
+<img width="1280" alt="eks_cluster" src="https://github.com/user-attachments/assets/b61424a6-b1a9-446a-bc0a-0f77092c0062">
+
 
 2. Configure AWS CLI and kubectl:
 
@@ -140,7 +141,8 @@ kubectl apply -f sock-shop-deployment.yaml
 
 ```
 
-<img src="./images/deployment.png"/>
+<img width="772" alt="deployment" src="https://github.com/user-attachments/assets/b183bb0c-01e4-47cd-a4a2-6d418c2c79c4">
+
 
 ## You can now use the kubeconfig file to access the Kubernetes cluster and deploy the Socks Shop application.
 
@@ -148,7 +150,8 @@ kubectl apply -f sock-shop-deployment.yaml
 kubectl get all -n sock-shop
 ```
 
-<img src="./images/get-all-n.png"/>
+
+<img width="1280" alt="get-all-n" src="https://github.com/user-attachments/assets/4823505b-6084-4a77-8580-1cfc8402db0e">
 
 ## You can also use the following command to verify that the Socks Shop application is running on the Kubernetes cluster:
 
@@ -156,7 +159,7 @@ kubectl get all -n sock-shop
 kubectl get all -A
 ```
 
-<img src="./images/get-all.png"/>
+<img width="1280" alt="get-all" src="https://github.com/user-attachments/assets/82c819b7-370b-410e-bd0f-b76ef968cf91">
 
 ## After we confirm that our pods are running, we can now test the application by port-forwarding the service to our local machine using the following command:
 
@@ -164,7 +167,8 @@ kubectl get all -A
 kubectl port-forward service/front-end -n sock-shop 30001:80
 ```
 
-<img src="./images/sockshop-frontend.png"/>
+<img width="1280" alt="sockshop-frontend" src="https://github.com/user-attachments/assets/f39be130-09b6-4412-b2ac-1265440f0e79">
+
 
 2. To Deploy Globally with security (Https):
 
