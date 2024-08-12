@@ -118,7 +118,7 @@ terraform apply --auto-approve
 
 Below is a screenshot of my EKS cluster being provisioned by terraform👇🏽:
 
-  <img src="images/eks_cluster.png">
+![eks_cluster]("images/eks_cluster.png")
 
 2. Configure AWS CLI and kubectl:
 
